@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Garbage Classification System</title>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Animate.css for animations -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Animated background elements -->
+      <div class="background-elements">
+        <div class="floating-icon"><i class="fas fa-recycle"></i></div>
+        <div class="floating-icon"><i class="fas fa-leaf"></i></div>
+        <div class="floating-icon"><i class="fas fa-trash"></i></div>
+        <div class="floating-icon"><i class="fas fa-tree"></i></div>
+      </div>
+
+      <!-- Header -->
+      <header class="header animate__animated animate__fadeInDown">
+        <h1><i class="fas fa-globe-americas"></i> AI Garbage Classification</h1>
+        <p>
+          Upload an image to classify waste and get recycling recommendations
+        </p>
+        <span class="team-name">Team - Semicolon</span>
+      </header>
+
+      <!-- API Configuration -->
+      <section class="config-section animate__animated animate__fadeIn">
+        <h3><i class="fas fa-cog"></i> API Configuration</h3>
+        <div class="config-controls">
+          <input
+            type="text"
+            id="apiUrl"
+            class="api-input"
+            value="https://garbage-classifier-backend.onrender.com"             
+            placeholder="Enter your API URL"
+            disabled
+          />
+          <button class="test-btn" onclick="testConnection()">
+            <i class="fas fa-plug"></i> Test Connection
+          </button>
+        </div>
+        <div id="connectionStatus"></div>
+      </section>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Upload Section -->
+        <section
+          class="upload-section card animate__animated animate__fadeInLeft"
+        >
+          <h2><i class="fas fa-cloud-upload-alt"></i> Upload Image</h2>
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-icon"><i class="fas fa-images"></i></div>
+            <div class="upload-text">
+              Drag and drop an image here or click to browse
+            </div>
+            <button
+              class="upload-btn"
+              onclick="document.getElementById('fileInput').click()"
+            >
+              <i class="fas fa-folder-open"></i> Choose Image
+            </button>
+            <input
+              type="file"
+              id="fileInput"
+              class="file-input"
+              accept="image/*"
+            />
+          </div>
+
+          <div id="imagePreview" class="image-preview">
+            <img id="previewImg" class="preview-img" alt="Preview" />
+            <button class="remove-image" onclick="removeImage()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <div id="uploadStatus"></div>
+        </section>
+
+        <!-- Results Section -->
+        <section
+          class="results-section card animate__animated animate__fadeInRight"
+        >
+          <div class="results-header">
+            <div class="results-icon"><i class="fas fa-poll"></i></div>
+            <h2 style="margin-bottom: 0">Classification Results</h2>
+          </div>
+
+          <div id="resultsContent">
+            <div class="placeholder-results">
+              <i class="fas fa-microscope"></i>
+              <p>Upload an image to see classification results</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Statistics -->
+      <section class="stats-section card animate__animated animate__fadeInUp">
+        <h2><i class="fas fa-chart-line"></i> Classification Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-list-alt"></i></div>
+            <div class="stat-number" id="totalClassifications">0</div>
+            <div class="stat-label">Total Classifications</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-chart-pie"></i></div>
+            <div class="stat-number" id="averageConfidence">0%</div>
+            <div class="stat-label">Average Confidence</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-number" id="mostCommonClass">-</div>
+            <div class="stat-label">Most Common Class</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+            <div class="stat-number">92.9%</div>
+            <div class="stat-label">Model Accuracy</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Educational Content -->
+      <section
+        class="education-section card animate__animated animate__fadeInUp"
+      >
+        <h2><i class="fas fa-graduation-cap"></i> Learn About Recycling</h2>
+        <div class="education-grid">
+          <div class="education-card plastic-card">
+            <div class="education-icon"><i class="fas fa-wine-bottle"></i></div>
+            <h3>Plastic</h3>
+            <p>
+              Most plastics are recyclable. Look for recycling numbers 1-7.
+              Clean containers thoroughly and remove caps when possible.
+            </p>
+          </div>
+          <div class="education-card metal-card">
+            <div class="education-icon"><i class="fas fa-utensils"></i></div>
+            <h3>Metal</h3>
+            <p>
+              Aluminum and steel cans are 100% recyclable. Rinse clean and
+              remove labels. Metal can be recycled indefinitely.
+            </p>
+          </div>
+          <div class="education-card paper-card">
+            <div class="education-icon"><i class="fas fa-sticky-note"></i></div>
+            <h3>Paper</h3>
+            <p>
+              Keep paper clean and dry. Remove plastic coatings. Cardboard
+              should be flattened to save space in recycling bins.
+            </p>
+          </div>
+          <div class="education-card glass-card">
+            <div class="education-icon">
+              <i class="fas fa-glass-martini-alt"></i>
+            </div>
+            <h3>Glass</h3>
+            <p>
+              Glass containers are highly recyclable. Rinse thoroughly and
+              separate by color when required by local facilities.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Confetti canvas for celebrations -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+            <!-- "http://127.0.0.1:8000" -->
